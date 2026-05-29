@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇳🇴 Oslo跑跑薑餅 9/9–9/21</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0a1f30;--steel:#3a7ca5;--steel-lt:#d0e8f5;
+  --gold:#e8a020;--gold-lt:#fef3d8;
+  --green:#2e7d5e;--green-lt:#e1f5ee;
+  --purple:#6b4fc8;--purple-lt:#eeedfe;
+  --red:#c0392b;--red-lt:#fdecea;
+  --text:#1a2e3d;--muted:#5a7a92;
+  --card:#fff;--border:#d4e8f0;--bg:#eef6fb;--surface:#f5fafd;
+  --font:'DM Sans','Noto Sans TC',sans-serif;
+}
+@media(prefers-color-scheme:dark){:root{
+  --navy:#c8e4f5;--steel:#7db8d4;--steel-lt:#0f2a3d;
+  --gold:#e8b84b;--gold-lt:#2e1f00;
+  --green:#5dcaa5;--green-lt:#04241a;
+  --purple:#a389e0;--purple-lt:#1e1540;
+  --red:#e57373;--red-lt:#3a0a0a;
+  --text:#ddeef7;--muted:#7aafc9;
+  --card:#0f1e2a;--border:#1a3347;--bg:#08131c;--surface:#0d1e2b;
+}}
+html{font-size:16px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ── HEADER ── */
+.hdr{background:var(--navy);padding:20px 20px 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+@media(prefers-color-scheme:dark){.hdr{background:#071018}}
+.hdr-inner{max-width:720px;margin:0 auto}
+.trip-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.6;margin-bottom:3px;color:#fff}
+.trip-title{font-size:21px;font-weight:700;color:#fff;margin-bottom:2px}
+.trip-meta{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:14px}
+@media(prefers-color-scheme:dark){.trip-label,.trip-title,.trip-meta{color:var(--text)}.trip-label,.trip-meta{opacity:.7}}
+
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none;border-top:1px solid rgba(255,255,255,.12);gap:0}
+.tabs::-webkit-scrollbar{display:none}
+@media(prefers-color-scheme:dark){.tabs{border-top-color:var(--border)}}
+.tab{flex-shrink:0;padding:10px 14px 9px;font-size:13px;font-weight:500;color:rgba(255,255,255,.5);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;font-family:var(--font);touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:color .15s,border-color .15s}
+.tab:hover{color:rgba(255,255,255,.8)}
+.tab.active{color:#fff;border-bottom-color:var(--gold)}
+@media(prefers-color-scheme:dark){.tab{color:var(--muted)}.tab:hover{color:var(--text)}.tab.active{color:var(--text)}}
+
+/* ── CONTENT ── */
+.content{max-width:720px;margin:0 auto;padding:18px 16px 56px}
+.sec{display:none;animation:fi .18s ease}
+.sec.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ── CITY HEADER ── */
+.city-hdr{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px 17px;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.city-flag{font-size:28px;line-height:1}
+.city-hdr-b{flex:1}
+.city-hdr-b h2{font-size:19px;font-weight:700}
+.city-hdr-b p{font-size:12px;color:var(--muted);margin-top:2px}
+.badge{font-size:11px;font-weight:600;padding:4px 11px;border-radius:20px;white-space:nowrap}
+.b-race{background:var(--gold-lt);color:var(--gold)}
+.b-fjord{background:var(--green-lt);color:var(--green)}
+.b-city{background:var(--steel-lt);color:var(--steel)}
+.b-end{background:var(--purple-lt);color:var(--purple)}
+
+/* ── ALERT ── */
+.alert{border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:13px;line-height:1.6}
+.a-warn{background:var(--gold-lt);border-left:3px solid var(--gold)}
+.a-info{background:var(--steel-lt);border-left:3px solid var(--steel)}
+.a-green{background:var(--green-lt);border-left:3px solid var(--green)}
+.a-red{background:var(--red-lt);border-left:3px solid var(--red)}
+.alert strong{font-weight:600}
+
+/* ── SECTION LABEL ── */
+.slabel{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.09em;text-transform:uppercase;margin:18px 0 9px}
+
+/* ── FLIGHT CARD ── */
+.flight-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 15px;margin-bottom:9px}
+.flight-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.flight-num{font-size:13px;font-weight:700;background:var(--steel-lt);color:var(--steel);padding:3px 10px;border-radius:6px}
+.flight-route{font-size:13px;font-weight:600;flex:1}
+.flight-detail{font-size:12px;color:var(--muted);line-height:1.55}
+
+/* ── TRANSPORT CARD ── */
+.t-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 15px;display:flex;align-items:center;gap:13px;margin-bottom:9px}
+.t-icon{width:40px;height:40px;border-radius:10px;background:var(--steel-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+.t-body{flex:1}
+.t-route{font-size:14px;font-weight:600}
+.t-detail{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.5}
+.t-meta{text-align:right;flex-shrink:0}
+.t-time{font-size:14px;font-weight:600}
+.t-date{font-size:11px;color:var(--muted)}
+.tlink{display:inline-block;margin-top:5px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;background:var(--steel-lt);color:var(--steel);text-decoration:none}
+.tlink:hover{opacity:.75}
+
+/* ── DAY CARD ── */
+.dc{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:9px;overflow:hidden}
+.dc-hdr{padding:12px 15px;display:flex;align-items:center;gap:11px;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.dc-hdr:hover{background:var(--surface)}
+.dc-num{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--steel)}
+.dc-num.race{background:var(--gold-lt);border-color:var(--gold);color:var(--gold)}
+.dc-num.fly{background:var(--purple-lt);border-color:var(--purple);color:var(--purple)}
+.dc-num.fjord{background:var(--green-lt);border-color:var(--green);color:var(--green)}
+.dc-tb{flex:1}
+.dc-title{font-size:14px;font-weight:600}
+.dc-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.dc-chev{color:var(--muted);font-size:17px;transition:transform .2s;line-height:1}
+.dc.open .dc-chev{transform:rotate(180deg)}
+.dc-body{padding:2px 15px 13px;display:none}
+.dc.open .dc-body{display:block}
+
+/* ── ITEMS ── */
+.item{display:flex;gap:11px;margin-bottom:11px}
+.item:last-child{margin-bottom:0}
+.idc{display:flex;flex-direction:column;align-items:center;padding-top:4px}
+.idot{width:9px;height:9px;border-radius:50%;background:var(--steel);flex-shrink:0}
+.idot.g{background:var(--gold)}
+.idot.gr{background:var(--green)}
+.iline{width:1.5px;background:var(--border);flex:1;margin-top:4px;min-height:12px}
+.ibody{flex:1;padding-top:1px}
+.iname{font-size:13px;font-weight:600}
+.idesc{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.55}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.itag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;text-decoration:none}
+.tf{background:var(--green-lt);color:var(--green)}
+.tm{background:var(--purple-lt);color:var(--purple)}
+.tfo{background:#faece7;color:#993c1d}
+.tn{background:var(--green-lt);color:var(--green)}
+.tr{background:var(--gold-lt);color:var(--gold)}
+.tl{background:var(--steel-lt);color:var(--steel);cursor:pointer}
+.tl:hover{opacity:.75}
+@media(prefers-color-scheme:dark){.tfo{background:#3a1206;color:#f0997b}}
+
+/* ── BOOKING ── */
+.bg{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin-bottom:9px}
+.bc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 15px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:5px;transition:border-color .15s}
+.bc:hover{border-color:var(--steel)}
+.bc-top{display:flex;align-items:center;gap:9px}
+.bc-icon{font-size:20px;line-height:1}
+.bc-name{font-size:14px;font-weight:600}
+.bc-desc{font-size:12px;color:var(--muted);line-height:1.5}
+.bc-action{display:inline-block;margin-top:4px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;background:var(--steel-lt);color:var(--steel)}
+.bc.urgent{border-color:var(--gold)}
+.bc.urgent .bc-action{background:var(--gold-lt);color:var(--gold)}
+
+/* ── CHECKLIST ── */
+.prog-wrap{margin-bottom:16px}
+.prog-label{font-size:12px;color:var(--muted);margin-bottom:5px;display:flex;justify-content:space-between}
+.prog-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:var(--steel);border-radius:3px;transition:width .3s}
+.cl{list-style:none}
+.cl li{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.cl li:last-child{border-bottom:none}
+.cl input[type=checkbox]{width:17px;height:17px;margin-top:2px;flex-shrink:0;accent-color:var(--steel);cursor:pointer}
+.cl label{cursor:pointer;line-height:1.55}
+.cl label span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.cl-done label{text-decoration:line-through;color:var(--muted)}
+.cg-title{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;padding:14px 0 3px;border-top:1px solid var(--border);margin-top:2px}
+.cg-title:first-child{border-top:none;padding-top:0}
+
+/* ── WEATHER ── */
+.wx{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:13px}
+.wx-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center}
+.wx-city{font-size:11px;font-weight:600;color:var(--muted)}
+.wx-icon{font-size:24px;margin:5px 0}
+.wx-temp{font-size:15px;font-weight:700}
+.wx-desc{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ── SCROLL ── */
+.scroll-top{position:fixed;bottom:22px;right:18px;width:40px;height:40px;border-radius:50%;background:var(--steel);color:#fff;border:none;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.2);opacity:0;transition:opacity .2s;z-index:50}
+.scroll-top.show{opacity:1}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="trip-label">2026 北歐旅行</div>
+    <div class="trip-title">🇳🇴 Oslo跑跑薑餅</div>
+    <div class="trip-meta">9/9（三）出發 → 9/21（日）回程 · 13天 · 奧斯陸 × 峽灣 × 卑爾根 × 哥本哈根</div>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-tab="osl">🇳🇴 奧斯陸</button>
+      <button class="tab" data-tab="fjord">🏔 峽灣</button>
+      <button class="tab" data-tab="bgo">🌊 卑爾根</button>
+      <button class="tab" data-tab="cph">🇩🇰 哥本哈根</button>
+      <button class="tab" data-tab="book">🎟 預約清單</button>
+      <button class="tab" data-tab="prep">✅ 準備清單</button>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+<!-- ══ OSLO ══ -->
+<div class="sec active" id="sec-osl">
+  <div class="city-hdr">
+    <div class="city-flag">🇳🇴</div>
+    <div class="city-hdr-b"><h2>奧斯陸</h2><p>9/10 下午抵達 → 9/13 早上出發峽灣 · 3晚</p></div>
+    <span class="badge b-race">🏃 比賽城市</span>
+  </div>
+  <div class="alert a-info"><strong>🏠 住宿：</strong>Prinsens gate 10, Oslo · 入住 9/10 15:00，退房 9/13 11:00<br>附近餐廳：Mamma Pizza、KUMI、Bob the Bagel、Godt Brød Munch Brygge<br>超市：MENY Bjørvika（走路可到）</div>
+
+  <div class="slabel">✈️ 抵達航班</div>
+  <div class="flight-card">
+    <div class="flight-top"><span class="flight-num">BR087</span><div class="flight-route">台灣出發（你）</div></div>
+    <div class="flight-detail">9/9 出發 → 轉機 → 9/10 抵達奧斯陸<br>記得確認轉機細節</div>
+  </div>
+  <div class="flight-card">
+    <div class="flight-top"><span class="flight-num">SK0834 + AY913</span><div class="flight-route">莎拉日本出發</div></div>
+    <div class="flight-detail">SK0834 戴高樂 → AY913 赫爾辛基 → 奧斯陸<br>抵達後搭 Flytoget 機場快線，20分鐘到市中心 Oslo S</div>
+  </div>
+
+  <div class="slabel">行程</div>
+
+  <div class="dc" id="d1">
+    <div class="dc-hdr" onclick="td('d1')">
+      <div class="dc-num">9/10</div>
+      <div class="dc-tb"><div class="dc-title">抵達 · 放鬆初探</div><div class="dc-sub">下午落地，輕鬆感受奧斯陸</div></div>
+      <div class="dc-chev">⌄</div>
+    </div>
+    <div class="dc-body">
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Flytoget 機場快線入城</div><div class="idesc">Oslo Airport → Oslo S 約20分鐘 · NOK 198單程</div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">入住 Prinsens gate 10</div><div class="idesc">Check-in 15:00 · 放行李休息</div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Aker Brygge 海濱散步</div><div class="idesc">峽灣景色 + 餐廳，輕鬆晚餐</div><div class="tags"><span class="itag tf">免費</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div></div><div class="ibody"><div class="iname">奧斯陸歌劇院屋頂</div><div class="idesc">白色大理石斜屋頂，日落峽灣全景，完全免費</div><div class="tags"><span class="itag tf">免費</span></div></div></div>
+    </div>
+  </div>
+
+  <div class="dc" id="d2">
+    <div class="dc-hdr" onclick="td('d2')">
+      <div class="dc-num">9/11</div>
+      <div class="dc-tb"><div class="dc-title">城堡 · 桑拿 · 峽灣散步</div><div class="dc-sub">悠閒的週五</div></div>
+      <div class="dc-chev">⌄</div>
+    </div>
+    <div class="dc-body">
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">阿克胡斯城堡 Akershus Festning</div><div class="idesc">13世紀古堡，免費入場，峽灣視野絕佳</div><div class="tags"><span class="itag tf">免費</span><a class="itag tl" href="https://maps.app.goo.gl/PpANUVGVneu1VAFm8" target="_blank">Google Maps →</a></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">咖啡時間 ☕️</div><div class="idesc">城堡周邊或 Aker Brygge 找間好咖啡廳</div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">沿峽灣河岸散步</div><div class="idesc">Aker Brygge → 歌劇院沿海步道，非常適合跑前放鬆</div><div class="tags"><span class="itag tf">免費</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot gr"></div></div><div class="ibody"><div class="iname">KOK Oslo Badstue 桑拿 🧖</div><div class="idesc">峽灣邊的浮動桑拿屋！要提前預訂</div><div class="tags"><span class="itag tn">體驗</span><a class="itag tl" href="https://maps.app.goo.gl/Ndg1vbvgySPdTkQeA" target="_blank">Google Maps →</a></div></div></div>
+    </div>
+  </div>
+
+  <div class="dc" id="d3">
+    <div class="dc-hdr" onclick="td('d3')">
+      <div class="dc-num race">9/12</div>
+      <div class="dc-tb"><div class="dc-title">🏃 Oslo Marathon 比賽日！</div><div class="dc-sub">半馬 13:00 出發 · Rådhusplassen</div></div>
+      <div class="dc-chev">⌄</div>
+    </div>
+    <div class="dc-body">
+      <div class="alert a-warn" style="margin-bottom:10px"><strong>📋 比賽時間表：</strong>馬拉松 09:00 / <strong>半馬 13:00</strong> / 10km 輪椅 16:00 / 10 for Grete 16:20</div>
+      <div class="item"><div class="idc"><div class="idot g"></div><div class="iline"></div></div><div class="ibody"><div class="iname">早上吃早午餐 🍳</div><div class="idesc">下午才跑，早上時間充裕！附近 Bob the Bagel 或 Godt Brød</div></div></div>
+      <div class="item"><div class="idc"><div class="idot g"></div><div class="iline"></div></div><div class="ibody"><div class="iname">領號碼布 Expo</div><div class="idesc">9/10–11 可提前領（建議這天領），或 9/12 比賽前早上到 Rådhusplassen</div><div class="tags"><span class="itag tr">賽前必辦</span><a class="itag tl" href="https://oslomaraton.no" target="_blank">oslomaraton.no →</a></div></div></div>
+      <div class="item"><div class="idc"><div class="idot g"></div><div class="iline"></div></div><div class="ibody"><div class="iname">🏃 半馬起跑！13:00</div><div class="idesc">21km，沿奧斯陸峽灣海岸線，路線平坦風景超美</div><div class="tags"><span class="itag tr">DNB Oslo Half Marathon</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div></div><div class="ibody"><div class="iname">賽後慶功！Vigeland 雕塑公園</div><div class="idesc">200+ 座雕塑，步行或搭12號電車，完全免費。晚餐好好犒賞自己！</div><div class="tags"><span class="itag tf">免費</span></div></div></div>
+    </div>
+  </div>
+
+  <div class="slabel">前往峽灣</div>
+  <div class="t-card">
+    <div class="t-icon">🚆</div>
+    <div class="t-body">
+      <div class="t-route">奧斯陸 → Flåm（含換乘）</div>
+      <div class="t-detail">Oslo S → Myrdal（Bergen Line）→ Flåm（Flåmsbana）<br>全程約 5.5–6.5 小時 · 景色絕美 · 早鳥票 NOK 900–1000<br>只能在 vy.no 官網訂，不要用第三方</div>
+      <a class="tlink" href="https://www.vy.no/en" target="_blank">vy.no 訂票 →</a>
+    </div>
+    <div class="t-meta"><div class="t-time">9/13</div><div class="t-date">早上出發</div></div>
+  </div>
+</div>
+
+<!-- ══ FJORD ══ -->
+<div class="sec" id="sec-fjord">
+  <div class="city-hdr">
+    <div class="city-flag">🏔</div>
+    <div class="city-hdr-b"><h2>峽灣：Flåm → Voss → Bergen</h2><p>9/13 Flåm · 9/14 Flåm → Voss → Bergen</p></div>
+    <span class="badge b-fjord">世界遺產峽灣</span>
+  </div>
+  <div class="alert a-green"><strong>💡 Norway in a Nutshell：</strong>這段是挪威最經典的行程。奧斯陸→Bergen Line→Myrdal換Flåmsbana→Flåm，再加上Nærøyfjord遊船，被稱為世界最美的火車旅程之一！</div>
+
+  <div class="slabel">行程</div>
+
+  <div class="dc" id="df1">
+    <div class="dc-hdr" onclick="td('df1')">
+      <div class="dc-num fjord">9/13</div>
+      <div class="dc-tb"><div class="dc-title">Oslo → Flåm 抵達峽灣</div><div class="dc-sub">搭 Bergen Line + Flåmsbana，約 5.5hr</div></div>
+      <div class="dc-chev">⌄</div>
+    </div>
+    <div class="dc-body">
+      <div class="item"><div class="idc"><div class="idot g"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Oslo S 出發 → Bergen Line</div><div class="idesc">建議搭早班（約 8–9 點），坐左側有最佳山景視野</div><div class="tags"><a class="itag tl" href="https://www.vy.no/en" target="_blank">vy.no 訂票 →</a></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Myrdal 換乘 Flåmsbana</div><div class="idesc">世界最陡標準軌鐵路！20km，下降 866 公尺，坐右側看 Kjosfossen 瀑布</div></div></div>
+      <div class="item"><div class="idc"><div class="idot gr"></div><div class="iline"></div></div><div class="ibody"><div class="iname">抵達 Flåm 🛶</div><div class="idesc">峽灣邊的小村莊，周圍是 Aurlandsfjord。下午抵達後在村內散步</div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Flåm 自家釀酒廠 Ægir Bryggeri</div><div class="idesc">峽灣邊的維京風格啤酒廠，晚餐強烈推薦！氣氛超好</div><div class="tags"><span class="itag tfo">美食</span></div></div></div>
+    </div>
+  </div>
+
+  <div class="dc" id="df2">
+    <div class="dc-hdr" onclick="td('df2')">
+      <div class="dc-num fjord">9/14</div>
+      <div class="dc-tb"><div class="dc-title">Nærøyfjord 遊船 → Voss → Bergen</div><div class="dc-sub">UNESCO世界遺產峽灣！今天全是精華</div></div>
+      <div class="dc-chev">⌄</div>
+    </div>
+    <div class="dc-body">
+      <div class="item"><div class="idc"><div class="idot gr"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Nærøyfjord 峽灣遊船 🛥️</div><div class="idesc">從 Flåm 出發，UNESCO世界遺產。9月班次：11:00 或 16:00（建議早班）<br>電動船安靜無噪音，2小時，壁立千仞超震撼！</div><div class="tags"><span class="itag tn">世界遺產</span><a class="itag tl" href="https://www.visitflam.com/fjordcruise" target="_blank">預訂遊船 →</a></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Gudvangen 維京村 Njardarheimr</div><div class="idesc">船到 Gudvangen 後可選擇參觀重建的維京村，感受千年前的生活</div><div class="tags"><span class="itag tm">文化</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">巴士 Gudvangen → Voss</div><div class="idesc">約 45 分鐘，沿途有 Stalheim Hotel 壯麗山谷觀景</div></div></div>
+      <div class="item"><div class="idc"><div class="idot g"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Voss 停留（若時間允許）</div><div class="idesc">搭 Voss Gondola 纜車俯瞰山谷，Voss 是挪威極限運動之都！</div><div class="tags"><span class="itag tn">自然</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div></div><div class="ibody"><div class="iname">火車 Voss → Bergen（約1小時）</div><div class="idesc">傍晚抵達 Bergen，入住、晚餐</div></div></div>
+    </div>
+  </div>
+
+  <div class="slabel">抵達卑爾根</div>
+  <div class="t-card">
+    <div class="t-icon">🚆</div>
+    <div class="t-body">
+      <div class="t-route">Flåm → Voss → Bergen</div>
+      <div class="t-detail">巴士 Gudvangen–Voss → Bergen Line 火車<br>全套可在 vy.no 一起訂 · 約 2.5–3 小時</div>
+      <a class="tlink" href="https://www.vy.no/en" target="_blank">vy.no →</a>
+    </div>
+    <div class="t-meta"><div class="t-time">9/14</div><div class="t-date">下午抵達</div></div>
+  </div>
+</div>
+
+<!-- ══ BERGEN ══ -->
+<div class="sec" id="sec-bgo">
+  <div class="city-hdr">
+    <div class="city-flag">🌊</div>
+    <div class="city-hdr-b"><h2>卑爾根 Bergen</h2><p>9/14 晚上抵達 → 9/16 下午搭郵輪離開</p></div>
+    <span class="badge b-fjord">挪威第二大城</span>
+  </div>
+  <div class="alert a-info"><strong>☔ 卑爾根小提醒：</strong>Bergen 是全歐洲最多雨的城市之一！9月平均每月下雨 20+ 天。帶好雨衣，雨天的 Bryggen 其實更有氣氛！</div>
+
+  <div class="slabel">行程</div>
+
+  <div class="dc" id="db1">
+    <div class="dc-hdr" onclick="td('db1')">
+      <div class="dc-num">9/15</div>
+      <div class="dc-tb"><div class="dc-title">Bergen 全天：Bryggen × Fløibanen × 魚市場</div><div class="dc-sub">城市精華全收</div></div>
+      <div class="dc-chev">⌄</div>
+    </div>
+    <div class="dc-body">
+      <div class="item"><div class="idc"><div class="idot gr"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Bryggen 漢薩同盟老碼頭</div><div class="idesc">UNESCO世界遺產，彩色木屋排列成排，早上人少最適合慢慢逛</div><div class="tags"><span class="itag tm">世界遺產</span><span class="itag tf">免費</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Bergen 魚市場 Fisketorget</div><div class="idesc">嚐鮮炸魚、海鮮濃湯、挪威三文魚！露天市集氣氛超棒</div><div class="tags"><span class="itag tfo">美食</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot gr"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Fløibanen 纜車 上 Mt. Fløyen 🚡</div><div class="idesc">6分鐘抵頂，Bergen 七座山全景。來回票約 NOK 160，可下山健行回市區</div><div class="tags"><span class="itag tn">自然</span><a class="itag tl" href="https://floibanen.no/en" target="_blank">floibanen.no →</a></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div></div><div class="ibody"><div class="iname">Bergenhus 要塞 × 晚餐</div><div class="idesc">1500年代石造要塞，免費參觀。晚餐推薦 Bryggeloftet & Stuene（道地挪威料理）</div><div class="tags"><span class="itag tf">要塞免費</span><span class="itag tfo">美食</span></div></div></div>
+    </div>
+  </div>
+
+  <div class="dc" id="db2">
+    <div class="dc-hdr" onclick="td('db2')">
+      <div class="dc-num">9/16</div>
+      <div class="dc-tb"><div class="dc-title">Bergen 上午自由 → 下午搭郵輪</div><div class="dc-sub">莎拉查的郵輪出發哥本哈根</div></div>
+      <div class="dc-chev">⌄</div>
+    </div>
+    <div class="dc-body">
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">早上：Ulriken 纜車 或 博物館</div><div class="idesc">Ulriken 是 Bergen 最高山，纜車 NOK 220，視野更廣。或去 KODE 藝術博物館</div><div class="tags"><span class="itag tm">博物館</span><span class="itag tn">自然</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Fjåk 精品巧克力 ☕</div><div class="idesc">挪威第一間 bean-to-bar 巧克力！在 Bryggen 附近，最後一個午后甜點</div><div class="tags"><span class="itag tfo">美食</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot g"></div></div><div class="ibody"><div class="iname">搭郵輪出發 → 哥本哈根 🚢</div><div class="idesc">莎拉查的郵輪，從 Bergen 出發，隔天（9/17）抵達哥本哈根<br>船上有餐廳、艙房，省一晚旅館費！</div><div class="tags"><span class="itag tn">郵輪</span></div></div></div>
+    </div>
+  </div>
+
+  <div class="slabel">前往哥本哈根</div>
+  <div class="t-card">
+    <div class="t-icon">🚢</div>
+    <div class="t-body">
+      <div class="t-route">Bergen → 哥本哈根（郵輪）</div>
+      <div class="t-detail">莎拉查的郵輪，9/16 下午出發，9/17 抵達哥本哈根<br>Fjord Line 或 Color Line · 含艙房省旅館費！</div>
+      <a class="tlink" href="https://www.fjordline.com" target="_blank">fjordline.com →</a>
+      <a class="tlink" href="https://www.colorline.com" target="_blank">colorline.com →</a>
+    </div>
+    <div class="t-meta"><div class="t-time">9/16</div><div class="t-date">下午出發</div></div>
+  </div>
+</div>
+
+<!-- ══ COPENHAGEN ══ -->
+<div class="sec" id="sec-cph">
+  <div class="city-hdr">
+    <div class="city-flag">🇩🇰</div>
+    <div class="city-hdr-b"><h2>哥本哈根</h2><p>9/17 抵達 → 9/21 回程班機</p></div>
+    <span class="badge b-end">終點城市 ✈️</span>
+  </div>
+  <div class="alert a-green"><strong>✈️ 回程：</strong>SK1517 → CI082 東京 · 機場搭地鐵 M2 約 15分鐘。出發前確認班機時間，建議提前 2.5–3 小時到機場。</div>
+
+  <div class="slabel">行程</div>
+
+  <div class="dc" id="dc1">
+    <div class="dc-hdr" onclick="td('dc1')">
+      <div class="dc-num">9/17</div>
+      <div class="dc-tb"><div class="dc-title">郵輪抵達 · 市中心初探</div><div class="dc-sub">早上下船，入住放行李</div></div>
+      <div class="dc-chev">⌄</div>
+    </div>
+    <div class="dc-body">
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">入住哥本哈根</div><div class="idesc">建議 Vesterbro 或 Indre By 區，靠近 Tivoli 和 Nyhavn</div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Nyhavn 彩色港口 🌈</div><div class="idesc">哥本哈根最具代表性地標！17 世紀商港，運河邊的彩色木屋</div><div class="tags"><span class="itag tf">免費</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div></div><div class="ibody"><div class="iname">運河遊船 🛶</div><div class="idesc">從 Nyhavn 出發，1小時看完哥本哈根精華。Netto-Bådene 約 DKK 60，超划算</div><div class="tags"><span class="itag tn">景點</span></div></div></div>
+    </div>
+  </div>
+
+  <div class="dc" id="dc2">
+    <div class="dc-hdr" onclick="td('dc2')">
+      <div class="dc-num">9/18</div>
+      <div class="dc-tb"><div class="dc-title">Rosenborg 城堡 × Tivoli</div><div class="dc-sub">皇室歷史 + 世界最古老遊樂園</div></div>
+      <div class="dc-chev">⌄</div>
+    </div>
+    <div class="dc-body">
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Rosenborg 城堡 & 國王花園</div><div class="idesc">17 世紀王室城堡，收藏王冠珠寶。花園免費，城堡內部 DKK 175</div><div class="tags"><span class="itag tm">景點</span><span class="itag tf">花園免費</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Round Tower 圓塔</div><div class="idesc">1642年天文台，螺旋坡道步行至頂，俯瞰老城全景</div><div class="tags"><span class="itag tm">景點</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot gr"></div></div><div class="ibody"><div class="iname">Tivoli 遊樂園（傍晚入場）🎡</div><div class="idesc">1843年開業！夜晚燈光超夢幻。9/19 週五有 Fredagsrock 免費演唱會</div><div class="tags"><span class="itag tm">景點</span><a class="itag tl" href="https://www.tivoli.dk/en" target="_blank">tivoli.dk →</a></div></div></div>
+    </div>
+  </div>
+
+  <div class="dc" id="dc3">
+    <div class="dc-hdr" onclick="td('dc3')">
+      <div class="dc-num">9/19</div>
+      <div class="dc-tb"><div class="dc-title">Christiania × Christiansborg × 美食</div><div class="dc-sub">文化 + 在地體驗</div></div>
+      <div class="dc-chev">⌄</div>
+    </div>
+    <div class="dc-body">
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Freetown Christiania 自由城</div><div class="idesc">1971年建立的自治社區，塗鴉 + 另類文化，徒步 10 分鐘進入。拍照前要確認是否允許</div><div class="tags"><span class="itag tf">免費入場</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Christiansborg 宮殿塔樓</div><div class="idesc">登塔俯瞰哥本哈根全景，完全免費！丹麥議會所在地</div><div class="tags"><span class="itag tf">塔樓免費</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div></div><div class="ibody"><div class="iname">Torvehallerne 美食市場</div><div class="idesc">室內高端食品市場，丹麥精品咖啡 + 在地食材，午餐或下午茶</div><div class="tags"><span class="itag tfo">美食</span></div></div></div>
+    </div>
+  </div>
+
+  <div class="dc" id="dc4">
+    <div class="dc-hdr" onclick="td('dc4')">
+      <div class="dc-num">9/20</div>
+      <div class="dc-tb"><div class="dc-title">Strøget 購物 × 美人魚 × 最後晚餐</div><div class="dc-sub">最後一天自由逛逛</div></div>
+      <div class="dc-chev">⌄</div>
+    </div>
+    <div class="dc-body">
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">Strøget 購物街</div><div class="idesc">北歐最長步行街，最後採買紀念品、丹麥設計品</div><div class="tags"><span class="itag tfo">購物</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">小美人魚雕像 🧜‍♀️</div><div class="idesc">只有 4.1 尺高，但打卡必去！從 Nyhavn 步行 20 分鐘</div><div class="tags"><span class="itag tf">免費</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot gr"></div></div><div class="ibody"><div class="iname">道別大餐 🍽️</div><div class="idesc">Meatpacking District（Kødbyen）哥本哈根最潮餐廳區，為旅程劃下完美句點</div><div class="tags"><span class="itag tfo">美食</span></div></div></div>
+    </div>
+  </div>
+
+  <div class="dc" id="dc5">
+    <div class="dc-hdr" onclick="td('dc5')">
+      <div class="dc-num fly">9/21</div>
+      <div class="dc-tb"><div class="dc-title">早上最後巡禮 · 回家 ✈️</div><div class="dc-sub">SK1517 → CI082 → 東京</div></div>
+      <div class="dc-chev">⌄</div>
+    </div>
+    <div class="dc-body">
+      <div class="item"><div class="idc"><div class="idot"></div><div class="iline"></div></div><div class="ibody"><div class="iname">最後一杯丹麥精品咖啡 ☕</div><div class="idesc">Coffee Collective 是哥本哈根咖啡聖地，早上一定要來一杯</div><div class="tags"><span class="itag tfo">美食</span></div></div></div>
+      <div class="item"><div class="idc"><div class="idot g"></div></div><div class="ibody"><div class="iname">出發 哥本哈根機場 CPH ✈️</div><div class="idesc">SK1517 出發 → CI082 → 東京<br>地鐵 M2 約 15 分鐘。建議班機前 2.5–3 小時出發</div></div></div>
+    </div>
+  </div>
+
+  <div class="slabel">回程航班</div>
+  <div class="flight-card">
+    <div class="flight-top"><span class="flight-num">SK1517</span><div class="flight-route">哥本哈根 CPH → 赫爾辛基 HEL（第一段）</div></div>
+    <div class="flight-detail">SAS · 記得確認出發時間及轉機時間</div>
+  </div>
+  <div class="flight-card">
+    <div class="flight-top"><span class="flight-num">CI082</span><div class="flight-route">赫爾辛基 HEL → 東京 NRT（第二段）</div></div>
+    <div class="flight-detail">中華航空 · 抵達東京成田機場</div>
+  </div>
+</div>
+
+<!-- ══ BOOKING ══ -->
+<div class="sec" id="sec-book">
+  <div class="alert a-warn"><strong>⚠️ 越早訂越好！</strong>北歐旅遊旺季，特別是 Flåmsbana 火車和 Nærøyfjord 遊船名額很有限。標示「最優先」的現在就去訂！</div>
+
+  <div class="slabel">🔴 最優先</div>
+  <div class="bg">
+    <a class="bc urgent" href="https://oslomaraton.no/en/registration" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🏃</div><div class="bc-name">奧斯陸半馬報名</div></div>
+      <div class="bc-desc">DNB Oslo Half Marathon<br>半馬 13:00 出發<br>費用約 700–900 NOK</div>
+      <span class="bc-action">立刻報名 →</span>
+    </a>
+    <a class="bc urgent" href="https://www.vy.no/en" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🚆</div><div class="bc-name">Oslo → Flåm 火車</div></div>
+      <div class="bc-desc">Bergen Line + Flåmsbana<br>9/13 早上出發<br>NOK 900–1000 早鳥</div>
+      <span class="bc-action">vy.no 訂票 →</span>
+    </a>
+    <a class="bc urgent" href="https://www.visitflam.com/fjordcruise" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🛥️</div><div class="bc-name">Nærøyfjord 遊船</div></div>
+      <div class="bc-desc">UNESCO 世界遺產峽灣<br>9/14，9月班次<br>11:00 或 16:00</div>
+      <span class="bc-action">visitflam.com →</span>
+    </a>
+    <a class="bc urgent" href="https://kokoslobadstue.no" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🧖</div><div class="bc-name">KOK 桑拿預訂</div></div>
+      <div class="bc-desc">峽灣邊浮動桑拿屋<br>9/11 下午<br>需提前預訂！</div>
+      <span class="bc-action">提前預訂 →</span>
+    </a>
+  </div>
+
+  <div class="slabel">🚢 城市間交通</div>
+  <div class="bg">
+    <a class="bc" href="https://flytoget.no/en" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🚅</div><div class="bc-name">奧斯陸機場快線</div></div>
+      <div class="bc-desc">Flytoget<br>Oslo Airport → Oslo S<br>20分鐘 · NOK 198</div>
+      <span class="bc-action">flytoget.no →</span>
+    </a>
+    <a class="bc" href="https://www.vy.no/en" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🚆</div><div class="bc-name">Flåm → Voss → Bergen</div></div>
+      <div class="bc-desc">巴士 + Bergen Line<br>9/14<br>約 2.5–3 小時</div>
+      <span class="bc-action">vy.no →</span>
+    </a>
+    <a class="bc" href="https://www.fjordline.com/en" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🚢</div><div class="bc-name">Bergen → 哥本哈根</div></div>
+      <div class="bc-desc">郵輪（莎拉查的）<br>9/16 下午出發<br>9/17 早上抵達</div>
+      <span class="bc-action">fjordline.com →</span>
+    </a>
+    <a class="bc" href="https://www.m.dk" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🚇</div><div class="bc-name">哥本哈根機場地鐵</div></div>
+      <div class="bc-desc">地鐵 M2<br>市中心 → CPH 約15分鐘<br>DKK 36</div>
+      <span class="bc-action">m.dk →</span>
+    </a>
+  </div>
+
+  <div class="slabel">🏨 住宿</div>
+  <div class="bg">
+    <a class="bc" href="https://maps.app.goo.gl/MH52FPmTn72RBSnA8" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🇳🇴</div><div class="bc-name">奧斯陸住宿</div></div>
+      <div class="bc-desc">Prinsens gate 10 ✓<br>9/10 15:00 –<br>9/13 11:00</div>
+      <span class="bc-action">地圖 →</span>
+    </a>
+    <a class="bc urgent" href="https://www.booking.com/city/no/flam.html" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🏔</div><div class="bc-name">Flåm 住宿 1晚</div></div>
+      <div class="bc-desc">9/13（1晚）<br>Flåmsbrygga Hotel 推薦<br>峽灣邊超棒！</div>
+      <span class="bc-action">趕快訂！→</span>
+    </a>
+    <a class="bc urgent" href="https://www.booking.com/city/no/bergen.html" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🌊</div><div class="bc-name">Bergen 住宿 1晚</div></div>
+      <div class="bc-desc">9/14（1晚）<br>Bryggen 附近最棒<br>早訂早省</div>
+      <span class="bc-action">訂住宿 →</span>
+    </a>
+    <a class="bc urgent" href="https://www.booking.com/city/dk/copenhagen.html" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🇩🇰</div><div class="bc-name">哥本哈根住宿 4晚</div></div>
+      <div class="bc-desc">9/17–9/21（4晚）<br>Vesterbro 或 Indre By<br>靠近 Tivoli</div>
+      <span class="bc-action">訂住宿 →</span>
+    </a>
+  </div>
+
+  <div class="slabel">🎟 景點票</div>
+  <div class="bg">
+    <a class="bc" href="https://floibanen.no/en/buy-tickets/" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🚡</div><div class="bc-name">Fløibanen 纜車</div></div>
+      <div class="bc-desc">Bergen Mt. Fløyen<br>來回 NOK 160<br>9/15</div>
+      <span class="bc-action">購票 →</span>
+    </a>
+    <a class="bc" href="https://www.tivoli.dk/en/tickets" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🎡</div><div class="bc-name">Tivoli 遊樂園</div></div>
+      <div class="bc-desc">哥本哈根必去<br>入場 DKK 165–195<br>9/18 或 9/19</div>
+      <span class="bc-action">tivoli.dk →</span>
+    </a>
+    <a class="bc" href="https://www.visitoslo.com/en/activities-and-attractions/oslo-pass/" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🎫</div><div class="bc-name">Oslo Pass</div></div>
+      <div class="bc-desc">交通 + 博物館全包<br>24h NOK 580<br>2–3間就回本</div>
+      <span class="bc-action">visitoslo.com →</span>
+    </a>
+    <a class="bc" href="https://www.copenhagencard.com" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🎫</div><div class="bc-name">Copenhagen Card</div></div>
+      <div class="bc-desc">哥本哈根交通 + 景點<br>24h DKK 469 起<br>4 天有 4 天券</div>
+      <span class="bc-action">copenhagencard.com →</span>
+    </a>
+  </div>
+
+  <div class="slabel">📱 實用 App</div>
+  <div class="bg">
+    <a class="bc" href="https://www.ruter.no/en" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🚌</div><div class="bc-name">Ruter（奧斯陸）</div></div>
+      <div class="bc-desc">地鐵 + 公車 + 渡輪<br>買票 + 查路線<br>信用卡直接付</div>
+      <span class="bc-action">ruter.no →</span>
+    </a>
+    <a class="bc" href="https://www.rejseplanen.dk/en/" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🚇</div><div class="bc-name">Rejseplanen（哥本哈根）</div></div>
+      <div class="bc-desc">丹麥全境交通查詢<br>地鐵 + 火車 + 公車<br>非常好用</div>
+      <span class="bc-action">rejseplanen.dk →</span>
+    </a>
+    <a class="bc" href="https://www.xe.com" target="_blank">
+      <div class="bc-top"><div class="bc-icon">💱</div><div class="bc-name">匯率</div></div>
+      <div class="bc-desc">NOK 挪威克朗<br>DKK 丹麥克朗<br>北歐幾乎不用現金</div>
+      <span class="bc-action">xe.com →</span>
+    </a>
+    <a class="bc" href="https://maps.google.com" target="_blank">
+      <div class="bc-top"><div class="bc-icon">🗺️</div><div class="bc-name">Google Maps</div></div>
+      <div class="bc-desc">出發前下載離線圖<br>奧斯陸 + Bergen<br>+ 哥本哈根三城</div>
+      <span class="bc-action">提前下載 →</span>
+    </a>
+  </div>
+</div>
+
+<!-- ══ PREP ══ -->
+<div class="sec" id="sec-prep">
+  <div class="prog-wrap">
+    <div class="prog-label"><span>準備進度</span><span id="prog-text">0 / 0</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+
+  <div class="wx">
+    <div class="wx-card"><div class="wx-city">🇳🇴 奧斯陸</div><div class="wx-icon">🌤</div><div class="wx-temp">10–16°C</div><div class="wx-desc">涼爽，可能下雨</div></div>
+    <div class="wx-card"><div class="wx-city">🏔 Bergen</div><div class="wx-icon">🌧</div><div class="wx-temp">12–16°C</div><div class="wx-desc">多雨！帶雨衣</div></div>
+    <div class="wx-card"><div class="wx-city">🇩🇰 哥本哈根</div><div class="wx-icon">⛅</div><div class="wx-temp">12–17°C</div><div class="wx-desc">帶外套</div></div>
+  </div>
+
+  <div class="dc open" id="cl1">
+    <div class="dc-hdr" onclick="td('cl1')"><div class="dc-num" style="font-size:18px">🔴</div><div class="dc-tb"><div class="dc-title">最優先：現在就去做</div></div><div class="dc-chev">⌄</div></div>
+    <div class="dc-body">
+      <ul class="cl">
+        <li><input type="checkbox" id="c1" onchange="updateProg()"><label for="c1">奧斯陸半馬報名 oslomaraton.no<span>半馬 13:00 出發，費用約 700–900 NOK</span></label></li>
+        <li><input type="checkbox" id="c2" onchange="updateProg()"><label for="c2">KOK 桑拿預訂 9/11 下午<span>峽灣浮動桑拿，很搶手！</span></label></li>
+        <li><input type="checkbox" id="c3" onchange="updateProg()"><label for="c3">Oslo → Flåm 火車票 9/13 vy.no<span>早班出發，NOK 900–1000 早鳥</span></label></li>
+        <li><input type="checkbox" id="c4" onchange="updateProg()"><label for="c4">Nærøyfjord 遊船預訂 9/14<span>名額有限！11:00 班次較推薦</span></label></li>
+        <li><input type="checkbox" id="c5" onchange="updateProg()"><label for="c5">Flåm 住宿 9/13（1晚）<span>Flåmsbrygga Hotel 或附近，很搶！</span></label></li>
+        <li><input type="checkbox" id="c6" onchange="updateProg()"><label for="c6">Bergen 住宿 9/14（1晚）<span>Bryggen 附近最方便</span></label></li>
+        <li><input type="checkbox" id="c7" onchange="updateProg()"><label for="c7">哥本哈根住宿 9/17–9/21（4晚）<span>Vesterbro 或 Indre By 推薦</span></label></li>
+        <li><input type="checkbox" id="c8" onchange="updateProg()"><label for="c8">確認 Bergen → 哥本哈根郵輪（莎拉的）<span>9/16 出發，確認訂票和艙房</span></label></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="dc" id="cl2">
+    <div class="dc-hdr" onclick="td('cl2')"><div class="dc-num" style="font-size:18px">📄</div><div class="dc-tb"><div class="dc-title">證件 & 文件</div></div><div class="dc-chev">⌄</div></div>
+    <div class="dc-body">
+      <ul class="cl">
+        <li><input type="checkbox" id="c9" onchange="updateProg()"><label for="c9">護照有效期限確認（至少剩 6 個月）<span>日本護照進申根區免簽</span></label></li>
+        <li><input type="checkbox" id="c10" onchange="updateProg()"><label for="c10">截圖 / 列印所有訂房確認信<span>含 Prinsens gate 10 訂房</span></label></li>
+        <li><input type="checkbox" id="c11" onchange="updateProg()"><label for="c11">截圖航班資訊：BR087 / SK0834 / AY913 / SK1517 / CI082<span></span></label></li>
+        <li><input type="checkbox" id="c12" onchange="updateProg()"><label for="c12">旅遊保險<span>含醫療、行李遺失、取消保障</span></label></li>
+        <li><input type="checkbox" id="c13" onchange="updateProg()"><label for="c13">通知銀行出國，確認信用卡可在歐洲使用<span>北歐幾乎全刷卡，VISA / Mastercard</span></label></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="dc" id="cl3">
+    <div class="dc-hdr" onclick="td('cl3')"><div class="dc-num" style="font-size:18px">🏃</div><div class="dc-tb"><div class="dc-title">半馬比賽準備</div><div class="dc-sub">9/12 13:00 出發</div></div><div class="dc-chev">⌄</div></div>
+    <div class="dc-body">
+      <ul class="cl">
+        <li><input type="checkbox" id="c14" onchange="updateProg()"><label for="c14">跑鞋（舊的合腳鞋，不要穿新鞋）<span>路線平坦，一般路跑鞋即可</span></label></li>
+        <li><input type="checkbox" id="c15" onchange="updateProg()"><label for="c15">跑步服裝（9月約 12–14°C，輕薄長袖）<span>帶備用一套</span></label></li>
+        <li><input type="checkbox" id="c16" onchange="updateProg()"><label for="c16">能量補給：能量膠 / 運動水壺<span>每 5km 有補給站</span></label></li>
+        <li><input type="checkbox" id="c17" onchange="updateProg()"><label for="c17">提前領號碼布（9/10 或 9/11 到 Expo）<span>比賽當天也可 09:00 前領</span></label></li>
+        <li><input type="checkbox" id="c18" onchange="updateProg()"><label for="c18">確認 Bag Drop（行李寄存服務）<span>比賽現場有提供</span></label></li>
+        <li><input type="checkbox" id="c19" onchange="updateProg()"><label for="c19">9/11（比賽前一天）早點休息！<span>桑拿後多喝水補水</span></label></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="dc" id="cl4">
+    <div class="dc-hdr" onclick="td('cl4')"><div class="dc-num" style="font-size:18px">🎒</div><div class="dc-tb"><div class="dc-title">行李打包</div><div class="dc-sub">北歐秋季 + 峽灣健行</div></div><div class="dc-chev">⌄</div></div>
+    <div class="dc-body">
+      <ul class="cl">
+        <li><input type="checkbox" id="c20" onchange="updateProg()"><label for="c20">防風外套 / 薄羽絨<span>峽灣和 Bergen 必備，早晚很涼</span></label></li>
+        <li><input type="checkbox" id="c21" onchange="updateProg()"><label for="c21">雨衣或防水外套<span>Bergen 是全歐最多雨城市！</span></label></li>
+        <li><input type="checkbox" id="c22" onchange="updateProg()"><label for="c22">舒適防水步行鞋（非跑鞋）<span>Flåm 和 Bergen 會走很多路</span></label></li>
+        <li><input type="checkbox" id="c23" onchange="updateProg()"><label for="c23">歐規轉接頭 Type C<span>挪威、丹麥都是 Type C/F</span></label></li>
+        <li><input type="checkbox" id="c24" onchange="updateProg()"><label for="c24">行動電源（10000mAh 以上）<span>峽灣地區訊號不穩，電量要夠</span></label></li>
+        <li><input type="checkbox" id="c25" onchange="updateProg()"><label for="c25">國際漫遊或歐洲 SIM 卡<span>奧斯陸機場可購買</span></label></li>
+        <li><input type="checkbox" id="c26" onchange="updateProg()"><label for="c26">輕便小背包（峽灣健行用）<span>Flåm 和 Bergen 爬山時帶水和零食</span></label></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="dc" id="cl5">
+    <div class="dc-hdr" onclick="td('cl5')"><div class="dc-num" style="font-size:18px">📱</div><div class="dc-tb"><div class="dc-title">出發前下載 App</div></div><div class="dc-chev">⌄</div></div>
+    <div class="dc-body">
+      <ul class="cl">
+        <li><input type="checkbox" id="c27" onchange="updateProg()"><label for="c27">Google Maps 離線地圖：奧斯陸、Bergen、哥本哈根<span>在飯店 WiFi 下載好，出去不耗流量</span></label></li>
+        <li><input type="checkbox" id="c28" onchange="updateProg()"><label for="c28">Ruter App（奧斯陸大眾交通）<span>買票 + 查路線</span></label></li>
+        <li><input type="checkbox" id="c29" onchange="updateProg()"><label for="c29">Rejseplanen（哥本哈根交通）<span>丹麥大眾運輸查詢</span></label></li>
+        <li><input type="checkbox" id="c30" onchange="updateProg()"><label for="c30">Google Translate 離線包：挪威文、丹麥文<span>菜單拍照翻譯很方便</span></label></li>
+        <li><input type="checkbox" id="c31" onchange="updateProg()"><label for="c31">Vy App（挪威火車）<span>查時刻 + 買 Oslo→Flåm 票</span></label></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo(0,0)">↑</button>
+
+<script>
+window.onload = function() {
+  var tabsEl = document.getElementById('tabs');
+  tabsEl.onclick = function(e) {
+    var btn = e.target;
+    while (btn && btn !== tabsEl) {
+      if (btn.hasAttribute('data-tab')) {
+        var city = btn.getAttribute('data-tab');
+        document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+        document.querySelectorAll('.sec').forEach(function(s){ s.classList.remove('active'); });
+        btn.classList.add('active');
+        var sec = document.getElementById('sec-' + city);
+        if (sec) sec.classList.add('active');
+        btn.scrollIntoView({ inline: 'center', block: 'nearest' });
+        window.scrollTo(0, 0);
+        return;
+      }
+      btn = btn.parentElement;
+    }
+  };
+  loadChecks();
+};
+
+function td(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+
+function updateProg() {
+  var all = document.querySelectorAll('#sec-prep input[type=checkbox]');
+  var done = document.querySelectorAll('#sec-prep input[type=checkbox]:checked');
+  var pct = all.length ? Math.round(done.length / all.length * 100) : 0;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = done.length + ' / ' + all.length;
+  all.forEach(function(cb){
+    cb.closest('li').classList.toggle('cl-done', cb.checked);
+  });
+  try {
+    localStorage.setItem('gingerbread_checks', JSON.stringify(Array.from(all).map(function(cb){ return cb.checked; })));
+  } catch(e) {}
+}
+
+function loadChecks() {
+  try {
+    var saved = JSON.parse(localStorage.getItem('gingerbread_checks') || '[]');
+    var all = document.querySelectorAll('#sec-prep input[type=checkbox]');
+    all.forEach(function(cb, i){ if (saved[i]) cb.checked = true; });
+    updateProg();
+  } catch(e) {}
+}
+
+window.onscroll = function() {
+  document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 250);
+};
+</script>
+</body>
+</html>
